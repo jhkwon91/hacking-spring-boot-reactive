@@ -49,6 +49,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-webtestclient</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -62,6 +68,16 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -70,7 +86,51 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>rabbitmq</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>6.0.9</version>
+		</dependency>
+
+		<!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-actuator</artifactId>-->
 <!--			<version>2.3.0.RELEASE</version>-->
@@ -83,8 +143,69 @@
 <!--		</dependency>-->
 	</dependencies>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.18.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
+
+<!--			<plugin>-->
+<!--				<groupId>org.asciidoctor</groupId>-->
+<!--				<artifactId>asciidoctor-maven-plugin</artifactId>-->
+<!--				<version>1.5.3</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>generate-docs</id>-->
+<!--						<phase>prepare-package</phase>-->
+<!--						<goals>-->
+<!--							<goal>process-asciidoc</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<backend>html</backend>-->
+<!--							<doctype>book</doctype>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<dependencies>-->
+<!--					<dependency>-->
+<!--						<groupId>org.springrfamework.restdoc</groupId>-->
+<!--						<artifactId>spring-restdocs-asciidoctor</artifactId>-->
+<!--						<version>${spring-restdocs.version}</version>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
+<!--			</plugin>-->
+
+<!--			<plugin>-->
+<!--				<artifactId>maven-resources-plugin</artifactId>-->
+<!--				<version>3.3.1</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>copy-resources</id>-->
+<!--						<phase>prepare-package</phase>-->
+<!--						<goals>-->
+<!--							<goal>copy-resources</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<outputDirectory>${project.build.outputDirectory}/static/docs</outputDirectory>-->
+<!--							<resources>-->
+<!--								<resource>-->
+<!--									<directory>${project.build.directory}/generated-docs</directory>-->
+<!--								</resource>-->
+<!--							</resources>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

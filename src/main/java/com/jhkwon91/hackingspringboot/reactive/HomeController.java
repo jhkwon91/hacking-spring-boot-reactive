@@ -1,6 +1,7 @@
 package com.jhkwon91.hackingspringboot.reactive;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +35,25 @@ public class HomeController {
 //        this.inventoryService = inventoryService;
 //    }
 
-    @GetMapping(value="/")
-    Mono<Rendering> home() {
+//    @GetMapping(value="/")
+//    Mono<Rendering> home() {
+//        return Mono.just(Rendering.view("home.html")
+//                .modelAttribute("items", this.itemRepository.findAll().doOnNext(System.out::println))
+//                .modelAttribute("cart", this.cartRepository.findById("My Cart").defaultIfEmpty(new Cart("My Cart")))
+//                .build());
+//    }
+
+    @GetMapping
+    Mono<Rendering> home(Authentication auth) {
         return Mono.just(Rendering.view("home.html")
-                .modelAttribute("items", this.itemRepository.findAll().doOnNext(System.out::println))
-                .modelAttribute("cart", this.cartRepository.findById("My Cart").defaultIfEmpty(new Cart("My Cart")))
+                .modelAttribute("items", this.inventoryService.getInventory())
+                .modelAttribute("cart", this.inventoryService.getCart(cartName(auth)).defaultIfEmpty(new Cart(cartName(auth))))
+                .modelAttribute("auth", auth)
                 .build());
+    }
+
+    private static String cartName(Authentication auth) {
+        return auth.getName() + "'s Cart";
     }
 
     @GetMapping(value="/search")
@@ -52,6 +66,9 @@ public class HomeController {
                 .modelAttribute("cart", this.cartRepository.findById("My Cart").defaultIfEmpty(new Cart("My Cart")))
                 .build());
     }
+
+
+
 
     @PostMapping("/add/{id}")
     Mono<String> addToCart(@PathVariable String id) {
